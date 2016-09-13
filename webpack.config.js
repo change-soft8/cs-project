@@ -30,7 +30,7 @@ module.exports = {
         stats: {
             colors: true
         },
-        hot: true,
+        hot: true
     },
     plugins: [
         //自动刷新
