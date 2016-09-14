@@ -6,6 +6,7 @@ import About from './src/router-example/components/About'
 import Home from './src/router-example/components/Home'
 import Landing from './src/router-example/components/Landing'
 import Logout from './src/router-example/components/Logout'
+import "./src/style/global.css"
 
 const e = document.createElement('div');
 e.id = 'app';

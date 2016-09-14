@@ -4,12 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "compile": "webpack --progress --colors",
         "watch": "webpack --progress --colors --watch",
         "start": "webpack-dev-server",
-        "pro": "node src/server.js",
-        "pro1": "set NODE_ENV=production webpack --progress --colors  --config webpack.pros.config.js && babel-node modules/server.js"
+        "pro": "node cfg/server.js"
     },
     "author": "",
     "license": "ISC",
