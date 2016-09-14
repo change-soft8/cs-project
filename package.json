@@ -7,7 +7,7 @@
         "compile": "webpack --progress --colors",
         "watch": "webpack --progress --colors --watch",
         "start": "webpack-dev-server",
-        "pro": "node cfg/server.js"
+        "pro": "webpack --config cfg/webpack.config.js && node cfg/server.js"
     },
     "author": "",
     "license": "ISC",

@@ -1,4 +1,4 @@
-dist
+cfg/__build__
 # Logs
 logs
 *.log
