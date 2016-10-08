@@ -100,3 +100,13 @@ export default {
 ```
 
 > 具体参见配置文件： [cs-project/cfg/webpack.config.js](https://github.com/change-soft8/cs-project/blob/master/cfg/webpack.config.js)
+
+### 3. 测试
+
+#### 3.1 测试文件
+
+运行： `npm test`
+
+#### 3.2 测试覆盖率
+
+运行： `npm run test:cover`
