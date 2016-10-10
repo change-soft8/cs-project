@@ -5,7 +5,7 @@ import "../style/global.css"
 
 import withExampleBasename from '../../cfg/withExampleBasename'
 import routes from './config/routes'
-console.info(routes)
+
 render((
   <Router
     history={withExampleBasename(hashHistory)}

@@ -107,6 +107,14 @@ export default {
 
 运行： `npm test`
 
-#### 3.2 测试覆盖率
+#### 3.2 测试单个文件
+
+运行：`npm test  --testFile utils`
+
+#### 3.3 测试多个文件
+
+运行：`npm test  --testFile utils About`
+
+#### 3.4 测试覆盖率
 
 运行： `npm run test:cover`

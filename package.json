@@ -8,8 +8,8 @@
     "watch": "webpack --progress --colors --watch",
     "start": "webpack-dev-server",
     "pro": "webpack --config cfg/webpack.config.js && node cfg/server.js",
-    "test": "mocha",
-    "test:cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha",
+    "test":"node test/testServer",
+    "test:cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test/**/*.test.js",
     "posttest:cover": "browser-sync start --server coverage/lcov-report"
   },
   "author": "",
@@ -40,7 +40,8 @@
     "webpack": "^1.13.2",
     "webpack-browser-plugin": "^1.0.12",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "yargs": "^6.0.0"
   },
   "dependencies": {}
 }

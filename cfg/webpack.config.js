@@ -37,6 +37,12 @@ module.exports = {
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('shared.js'),
+        // 根据文件大小排序
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        // 对文件进行压缩
+        new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+        // 删除重复依赖包
+        new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })

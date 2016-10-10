@@ -1,8 +1,43 @@
-<!doctype html public "indecency">
-<title>Authentication With Shared Root Example</title>
+<html>
+
+<head>
+    <title>Authentication With Shared Root Example</title>
+</head>
+
 <body>
-<h1 class="breadcrumbs">React Router Examples</h1>
-<div id="example"/>
+    <h1 class="breadcrumbs">React Router Examples</h1>
+    <div id="example"></div>
+    <script type="text/javascript" src="/jsCache.js"></script>
+    <script type="text/javascript">
+    jsCache.domReady(function() {
+        jsCache.load(
+        ).then(function() {
+            var query = 'head.appendChild(script)';
+            // 需替换的内容
+            var replace = 'jsCache.load({url:__webpack_require__.p + "" + chunkId + ".chunk.js"})';
+            // 替换压缩后的现有内容查询器
+            var queryMin = /[a-z].appendChild\([a-z]\)/;
+            // 需替换的压缩后的内容
+            var replaceMin = 'jsCache.load({url:t.p+""+e+".chunk.js"})';
+            // 加载系统共享组件
+            jsCache.load({
+                url: "/__build__/shared.js",
+                // 加载到数据需要更改的内容
+                dataChange: [{
+                    query: query,
+                    replace: replace
+                }, {
+                    query: queryMin,
+                    replace: replaceMin
+                }]
+            }).then(function() {
+                jsCache.load({
+                    url: "/__build__/router-example.js"
+                })
+            });
+        });
+    });
+    </script>
 </body>
-<script src="/__build__/shared.js"></script>
-<script src="/__build__/router-example.js"></script>
+
+</html>
