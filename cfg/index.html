@@ -7,33 +7,90 @@
 <body>
     <h1 class="breadcrumbs">React Router Examples</h1>
     <div id="example"></div>
-    <script type="text/javascript" src="/jsCache.js"></script>
+    <script type="text/javascript" src="./jsCache.js"></script>
     <script type="text/javascript">
     jsCache.domReady(function() {
-        jsCache.load(
-        ).then(function() {
-            var query = 'head.appendChild(script)';
-            // 需替换的内容
-            var replace = 'jsCache.load({url:__webpack_require__.p + "" + chunkId + ".chunk.js"})';
-            // 替换压缩后的现有内容查询器
-            var queryMin = /[a-z].appendChild\([a-z]\)/;
-            // 需替换的压缩后的内容
-            var replaceMin = 'jsCache.load({url:t.p+""+e+".chunk.js"})';
-            // 加载系统共享组件
+        // 设置缓存过期时间
+        jsCache.expires = 3650 * 24 * 60 * 60 * 1000;
+        // 依赖插件配置cacheMap
+        window.cacheMap = {
+            // ========================== javascript 脚本相关 ==============================
+            // 系统公共部分
+            shared: '/__build__/shared.e826d5d89159d5457bb8.js',
+            // react 压缩组件 （测试生产环境）
+            react: '//cdn.bootcss.com/react/15.2.1/react.min.js',
+            // react Dom 组件
+            reactDom: '//cdn.bootcss.com/react/15.2.1/react-dom.min.js',
+            // react 路由组件
+            reactRouter: '//cdn.bootcss.com/react-router/2.6.0/ReactRouter.min.js',
+            //router-example
+            'router-example.page': '/__build__/router-example.e826d5d89159d5457bb8.page.js'
+        }
+
+        // 加载系统共享组件
+        jsCache.load({
+            url: cacheMap.react
+        }).then(function() {
             jsCache.load({
-                url: "/__build__/shared.js",
-                // 加载到数据需要更改的内容
-                dataChange: [{
-                    query: query,
-                    replace: replace
-                }, {
-                    query: queryMin,
-                    replace: replaceMin
-                }]
+                url: cacheMap.reactDom
+            }, {
+                url: cacheMap.reactRouter
             }).then(function() {
+                var query = 'head.appendChild(script)';
+                // 需替换的内容
+                var replace = 'jsCache.load({url:__webpack_require__.p + "" + chunkId + ".chunk.js"})';
+                // 替换压缩后的现有内容查询器
+                var queryMin = /[a-z].appendChild\([a-z]\)/;
+                // 需替换的压缩后的内容
+                var replaceMin = 'jsCache.load({url:t.p+""+e+".chunk.js"})';
+                // 如果支持 localStorage 存储
+                if (localStorage) {
+                    // 默认不改变
+                    var load = false;
+                    var oldHash;
+                    // 遍历localStorage
+                    for (var k in localStorage) {
+                        // 如果k 包含 jsCache_和share
+                        if (k.indexOf('jsCache_') > -1 && k.indexOf('shared') > -1) {
+                            // 获得 缓存插件url
+                            var bn = k.replace('jsCache_', '');
+                            //判断shared名是否改变
+                            if (bn !== window.cacheMap.shared) {
+                                load = true;
+                                oldHash = bn.match(/\.[^\.]+\./)[0];
+                            }
+                        }
+                    }
+                    //如果share改变，localStorage删除老的hash和chunk文件
+                    if (load) {
+                        for (var k in localStorage) {
+                            if ((k.indexOf(oldHash) > -1) || (k.indexOf('.chunk.js') > -1)) {
+                                // jsCache.remove(k);
+                                localStorage.removeItem(k)
+                            }
+                        }
+                    }
+                }
                 jsCache.load({
-                    url: "/__build__/router-example.js"
-                })
+                    url: cacheMap.shared,
+                    // 加载到数据需要更改的内容
+                    dataChange: [{
+                        query: query,
+                        replace: replace
+                    }, {
+                        query: queryMin,
+                        replace: replaceMin
+                    }]
+                }).then(function() {
+                    //加载page文件
+                    for (k in cacheMap) {
+                        if (k.indexOf('.page') > -1) {
+                            jsCache.load({
+                                url: cacheMap[k]
+                            })
+                        }
+                    }
+                });
             });
         });
     });

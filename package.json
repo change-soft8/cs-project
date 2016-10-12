@@ -6,9 +6,9 @@
   "scripts": {
     "compile": "webpack --progress --colors",
     "watch": "webpack --progress --colors --watch",
-    "start": "webpack-dev-server",
-    "pro": "webpack --config cfg/webpack.config.js && node cfg/server.js",
-    "test":"node test/testServer",
+    "start": "webpack-dev-server --history-api-fallback",
+    "pro": "webpack --config cfg/webpack.config.js --progress --colors && node cfg/server.js",
+    "test": "node test/testServer",
     "test:cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test/**/*.test.js",
     "posttest:cover": "browser-sync start --server coverage/lcov-report"
   },
@@ -18,6 +18,8 @@
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-decorators": "^6.13.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",

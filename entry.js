@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from "react-dom";
-import { Router, Link, hashHistory, Route, IndexRoute } from 'react-router'
+import { Router, Link, browserHistory, Route, IndexRoute } from 'react-router'
 import App from './src/router-example/components/App'
 import About from './src/router-example/components/About'
 import Home from './src/router-example/components/Home'
@@ -13,7 +13,7 @@ e.id = 'app';
 document.body.appendChild(e);
 
 ReactDOM.render((
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="/about" component={About}/>
