@@ -11,8 +11,8 @@ module.exports = {
     devtool: 'inline-source-map',
 
     entry: fs.readdirSync(SRC_PATH).reduce(function(entries, dir) {
-        if (fs.statSync(path.join(SRC_PATH, dir)).isDirectory() && dir != 'style')
-            entries[dir] = path.join(SRC_PATH, dir, 'app.js')
+        if (fs.statSync(path.join(SRC_PATH, dir)).isDirectory() && dir != 'style' && dir != 'config')
+            entries[dir] = path.join(SRC_PATH, 'app.js')
         return entries
     }, {}),
 
