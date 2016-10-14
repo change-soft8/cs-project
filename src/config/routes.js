@@ -1,24 +1,24 @@
 export default {
-    component: require('../components/App'),
+    component: require('../router/App'),
     childRoutes: [{
             path: '/logout',
             getComponent: (nextState, cb) => {
                 require.ensure([], (require) => {
-                    cb(null, require('../components/Logout'))
+                    cb(null, require('../router/Logout'))
                 })
             }
         }, {
             path: '/about',
             getComponent: (nextState, cb) => {
                 require.ensure([], (require) => {
-                    cb(null, require('../components/About'))
+                    cb(null, require('../router/About'))
                 })
             }
         }, {
             path: '/landing',
             getComponent: (nextState, cb) => {
                 require.ensure([], (require) => {
-                    cb(null, require('../components/Landing'))
+                    cb(null, require('../router/Landing'))
                 })
             }
         },
@@ -27,7 +27,7 @@ export default {
             path: '/',
             getComponent: (nextState, cb) => {
                 return require.ensure([], (require) => {
-                    cb(null, require('../components/Home'))
+                    cb(null, require('../router/Home'))
                 })
             },
 
