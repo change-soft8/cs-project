@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const path= require('path');
-//Æô¶¯indexÒ³Ãæ
+
+//åŠ è½½é™æ€åœ°å€
 app.use(express.static(__dirname));
-app.get('/', (req, res) => {
+
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 })
 app.use(function(req, res) {

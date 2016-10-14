@@ -22,7 +22,7 @@
             // react Dom 组件
             reactDom: '//cdn.bootcss.com/react/15.2.1/react-dom.min.js',
             // react 路由组件
-            reactRouter: '//cdn.bootcss.com/react-router/2.6.0/ReactRouter.min.js',
+            reactRouter: '//cdn.bootcss.com/react-router/2.7.0/ReactRouter.min.js',
             //router-example
             'router-example.page': '/__build__/router-example.e826d5d89159d5457bb8.page.js'
         }
@@ -45,31 +45,54 @@
                 var replaceMin = 'jsCache.load({url:t.p+""+e+".chunk.js"})';
                 // 如果支持 localStorage 存储
                 if (localStorage) {
-                    // 默认不改变
-                    var load = false;
+                    // 默认shared不改变
+                    var sharedChg = false;
+                    //老的hash值
                     var oldHash;
-                    // 遍历localStorage
+                    // 遍历localStorage获取老的Hash值
                     for (var k in localStorage) {
+                        // 获得 缓存插件url
+                        var bn = k.replace('jsCache_', '');
                         // 如果k 包含 jsCache_和share
                         if (k.indexOf('jsCache_') > -1 && k.indexOf('shared') > -1) {
-                            // 获得 缓存插件url
-                            var bn = k.replace('jsCache_', '');
                             //判断shared名是否改变
                             if (bn !== window.cacheMap.shared) {
-                                load = true;
+                                sharedChg = true;
                                 oldHash = bn.match(/\.[^\.]+\./)[0];
                             }
                         }
+
                     }
-                    //如果share改变，localStorage删除老的hash和chunk文件
-                    if (load) {
-                        for (var k in localStorage) {
-                            if ((k.indexOf(oldHash) > -1) || (k.indexOf('.chunk.js') > -1)) {
-                                // jsCache.remove(k);
-                                localStorage.removeItem(k)
+                    // 遍历localStorage获取去除不匹配项
+                    for (var k in localStorage) {
+                        // 获得 缓存插件url
+                        var bn = k.replace('jsCache_', '');
+                        if ((k.indexOf(oldHash) > -1) || (k.indexOf('.chunk.js') > -1)) {
+                            //如果shared改变，localStorage删除老的hash和chunk文件
+                            if (sharedChg) {
+                                jsCache.remove(bn);
+                            }
+                        } else {
+                            // 默认不匹配
+                            var load = false;
+                            // 遍历依赖插件cacheMap
+                            for (var n in cacheMap) {
+                                // 获得插件url
+                                var url = cacheMap[n];
+                                // 如果该插件需要加载
+                                if (bn === url) {
+                                    // 插件需要加载
+                                    load = true;
+                                }
+                            }
+                            // 如果插件不需要加载
+                            if (!load) {
+                                // 移除
+                                jsCache.remove(bn);
                             }
                         }
                     }
+
                 }
                 jsCache.load({
                     url: cacheMap.shared,
