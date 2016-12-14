@@ -16,7 +16,7 @@
         window.cacheMap = {
             // ========================== javascript 脚本相关 ==============================
             // 系统公共部分
-            shared: '/__build__/shared.f0ab2fe81c66852a72b5.js',
+            shared: '/__build__/shared.6e177bde02d7dc823973.js',
             // react 压缩组件 （测试生产环境）
             react: '//cdn.bootcss.com/react/15.2.1/react.min.js',
             // react Dom 组件
@@ -24,7 +24,7 @@
             // react 路由组件
             reactRouter: '//cdn.bootcss.com/react-router/2.7.0/ReactRouter.min.js',
             //router-example
-            'router.page': '/__build__/router.f0ab2fe81c66852a72b5.page.js'
+            'router.page': '/__build__/router.6e177bde02d7dc823973.page.js'
         }
 
         // 加载系统共享组件
@@ -38,11 +38,11 @@
             }).then(function() {
                 var query = 'head.appendChild(script)';
                 // 需替换的内容
-                var replace = 'jsCache.load({url:__webpack_require__.p + "" + chunkId + ".chunk.js"})';
+                var replace = 'jsCache.load({url:script.src})';
                 // 替换压缩后的现有内容查询器
-                var queryMin = /[a-z].appendChild\([a-z]\)/;
+                var queryMin = /[a-z].appendChild\(([a-z])\)/;
                 // 需替换的压缩后的内容
-                var replaceMin = 'jsCache.load({url:t.p+""+e+".chunk.js"})';
+                var replaceMin = 'jsCache.load({url:$1.src})';
                 // 如果支持 localStorage 存储
                 if (localStorage) {
                     // 默认shared不改变
@@ -71,6 +71,7 @@
                             //如果shared改变，localStorage删除老的hash和chunk文件
                             if (sharedChg) {
                                 jsCache.remove(bn);
+                                localStorage.removeItem(k);
                             }
                         } else {
                             // 默认不匹配
@@ -89,6 +90,7 @@
                             if (!load) {
                                 // 移除
                                 jsCache.remove(bn);
+                                localStorage.removeItem(k);
                             }
                         }
                     }
